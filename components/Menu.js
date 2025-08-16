@@ -9,6 +9,9 @@ const Menu = () => {
 
   return (
     <View style={[styles.menuContainer, { paddingBottom: insets.bottom }]}>
+      <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('HistoricoResultados')}>
+        <Text style={styles.menuText}>Historico</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('GerenciadorDeJogos')}>
         <Text style={styles.menuText}>Gerenciar</Text>
       </TouchableOpacity>

@@ -8,6 +8,7 @@ import GerenciadorDeJogos from './components/GerenciadorDeJogos';
 import ResultadosLotofacil from './components/ResultadosLotofacil';
 import ConferirJogos from './components/ConferirJogos';
 import Menu from './components/Menu';
+import HistoricoResultados from './components/HistoricoResultados';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,11 @@ export default function App() {
       <NavigationContainer>
         <View style={styles.appContainer}>
           <Stack.Navigator initialRouteName="GerenciadorDeJogos">
+            <Stack.Screen 
+              name="HistoricoResultados" 
+              component={HistoricoResultados}
+              options={{ title: 'Historico Resultados' }}
+            />
             <Stack.Screen 
               name="GerenciadorDeJogos" 
               component={GerenciadorDeJogos}
