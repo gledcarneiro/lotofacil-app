@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Gestor de Jogos Lotofácil",
-    "slug": "lotofacilapp",
+    "slug": "lotofacil-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
