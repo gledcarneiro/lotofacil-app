@@ -12,6 +12,9 @@ const NumeroBola = ({ numero, selecionado, onPress }) => (
   </TouchableOpacity>
 );
 
+// Função auxiliar para formatar números com zero à esquerda
+const formatNumero = (num) => (num < 10 ? `0${num}` : `${num}`);
+
 // Componente principal do Gerenciador de Jogos
 const GerenciadorDeJogos = () => {
   const [numerosSelecionados, setNumerosSelecionados] = useState([]);
@@ -185,17 +188,22 @@ const GerenciadorDeJogos = () => {
           {/* Mapeia a lista de jogos salvos em ordem reversa para mostrar os mais novos primeiro */}
           {jogosSalvos.slice().reverse().map((jogo) => (
             <View key={jogo.id} style={styles.jogoSalvoCard}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.jogoSalvoTexto}>Jogo: {jogo.numeros.join(', ')}</Text>
+              {/* Números do jogo na primeira linha, sem quebra */}
+              <Text style={styles.jogoSalvoTexto}>
+                {jogo.numeros.map(formatNumero).join(', ')}
+              </Text>
+              
+              {/* Informações e botões na segunda linha */}
+              <View style={styles.jogoSalvoInfoBotoesContainer}>
                 <Text style={styles.jogoSalvoData}>Salvo em: {jogo.data}</Text>
-              </View>
-              <View style={styles.jogoSalvoBotoes}>
-                <TouchableOpacity onPress={() => usarComoModelo(jogo)} style={[styles.jogoBotao, styles.botaoUsarModelo]}>
-                  <Text style={styles.jogoBotaoTexto}>Usar para Novo Jogo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleApagarJogo(jogo.id)} style={[styles.jogoBotao, styles.botaoExcluir]}>
-                  <Text style={styles.jogoBotaoTexto}>Apagar</Text>
-                </TouchableOpacity>
+                <View style={styles.jogoSalvoBotoes}>
+                  <TouchableOpacity onPress={() => usarComoModelo(jogo)} style={[styles.jogoBotao, styles.botaoUsarModelo]}>
+                    <Text style={styles.jogoBotaoTexto}>Usar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleApagarJogo(jogo.id)} style={[styles.jogoBotao, styles.botaoExcluir]}>
+                    <Text style={styles.jogoBotaoTexto}>Apagar</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           ))}
@@ -316,9 +324,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  jogosSalvosContainer: {
-    width: '100%',
-  },
   jogoSalvoCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
@@ -331,32 +336,43 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 2,
-    flexDirection: 'row', // Adicionado para alinhar texto e botões
+    flexDirection: 'column', // Alterado para 'column' para empilhar os elementos
+    alignItems: 'flex-start', // Alinha os itens à esquerda
+  },
+  jogoSalvoInfoBotoesContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
+    marginTop: 10, // Adiciona espaço entre os números e a linha de info/botões
   },
   jogoSalvoTexto: {
-    fontSize: 16,
+    fontSize: 14, 
     color: '#555',
+    fontWeight: 'bold', 
   },
   jogoSalvoData: {
     fontSize: 12,
     color: '#999',
-    marginTop: 5,
   },
   jogoSalvoBotoes: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   jogoBotao: {
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginLeft: 10,
+    marginLeft: 10, 
   },
   botaoUsarModelo: {
+    width: 60, // Largura fixa para deixar os botões com o mesmo tamanho
+    alignItems: 'center', // Centraliza o texto
     backgroundColor: '#2196F3',
   },
   botaoExcluir: {
+    width: 60, // Largura fixa para deixar os botões com o mesmo tamanho
+    alignItems: 'center', // Centraliza o texto
     backgroundColor: '#F44336',
   },
   jogoBotaoTexto: {
